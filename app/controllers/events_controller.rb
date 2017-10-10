@@ -7,7 +7,9 @@ before_action :authenticate_user!, except: [:show]
     @events = current_user.events
   end
 
-  def show; end
+  def show
+    @categories = @event.categories
+  end
 
   def new
     @event = current_user.events.build
@@ -17,7 +19,7 @@ before_action :authenticate_user!, except: [:show]
     @event = current_user.events.build(event_params)
 
       if @event.save
-        redirect to @event, notice: "Event created"
+        redirect_to @event, notice: "Event created"
       else
         render :new
       end
@@ -36,7 +38,7 @@ before_action :authenticate_user!, except: [:show]
   private
 
   def set_event
-    @event = Event.find(params:[id])
+    @event = Event.find(params[:id])
   end
 
   def event_params
@@ -44,7 +46,7 @@ before_action :authenticate_user!, except: [:show]
       .require(:event)
       .permit(
         :name, :description, :location, :price, :capacity, :includes_food,
-        :includes_drinks, :starts_at, :ends_at, :active
+        :includes_drinks, :starts_at, :ends_at, :active, category_ids: []
       )
   end
 

@@ -2,6 +2,16 @@ require 'rails_helper'
 
 RSpec.describe Event, type: :model do
 
+  describe "association with user" do
+    let(:user) { create :user }
+
+    it "belongs to a user" do
+      event = user.events.build(name: "Outdoors party")
+
+      expect(event.user).to eq(user)
+    end
+  end
+
   describe "validations" do
     it "is invalid without a name" do
       event = Event.new(name: "")
@@ -21,6 +31,21 @@ RSpec.describe Event, type: :model do
       expect(event.errors).to have_key(:description)
     end
   end
+
+  describe "association with category" do
+  let(:event) { create :event }
+
+  let(:category1) { create :category, name: "Bright", events: [event] }
+  let(:category2) { create :category, name: "Clean lines", events: [event] }
+  let(:category3) { create :category, name: "A Man's Touch", events: [event] }
+
+  it "has categories" do
+    expect(event.categories).to include(category1)
+    expect(event.categories).to include(category2)
+    expect(event.categories).to include(category3)
+    end
+  end
+
 
   describe "#bargain?" do
     let(:bargain_event) { create :event, price: 20 }

@@ -9,6 +9,7 @@ before_action :authenticate_user!, except: [:show]
 
   def show
     @categories = @event.categories
+    @photos = @event.photos
   end
 
   def new
@@ -19,17 +20,31 @@ before_action :authenticate_user!, except: [:show]
     @event = current_user.events.build(event_params)
 
       if @event.save
-        redirect_to @event, notice: "Event created"
+        image_params.each do |image|
+          @room.photos.create(image: image)
+        end
+
+        redirect_to edit_event_path(@event), notice: "Event created"
       else
         render :new
       end
   end
 
-  def edit; end
+  def edit
+    if current_user.id == @event.user.id
+      @photos = @event.photos
+    else
+      redirect_to root_path, notice: "You don't have permission."
+    end
+  end
 
   def update
     if @event.update(event_params)
-      redirect_to @event, notice: "Event updated"
+      image_params.each do |image|
+        @event.photos.create(image: image)
+      end
+
+      redirect_to edit_event_path(@event), notice: "Event updated"
     else
       render :edit
     end
@@ -48,6 +63,10 @@ before_action :authenticate_user!, except: [:show]
         :name, :description, :location, :price, :capacity, :includes_food,
         :includes_drinks, :starts_at, :ends_at, :active, category_ids: []
       )
+  end
+
+  def image_params
+    params[:images].present? ? params.require(:images) : []
   end
 
 end

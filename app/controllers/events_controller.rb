@@ -14,11 +14,12 @@ before_action :authenticate_user!, except: [:show]
 
   def new
     @event = current_user.events.build
+    @categories = @event.categories
   end
 
   def create
     @event = current_user.events.build(event_params)
-
+    @categories = @event.categories
       if @event.save
         image_params.each do |image|
           @room.photos.create(image: image)
@@ -33,6 +34,7 @@ before_action :authenticate_user!, except: [:show]
   def edit
     if current_user.id == @event.user.id
       @photos = @event.photos
+      @categories = @event.categories
     else
       redirect_to root_path, notice: "You don't have permission."
     end

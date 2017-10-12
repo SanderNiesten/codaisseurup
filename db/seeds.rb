@@ -6,11 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 Category.destroy_all
+Photo.destroy_all
 Event.destroy_all
 User.destroy_all
 Profile.destroy_all
-Photo.destroy_all
-
 
 arno = User.create(email: "arno@codaisseurup.com", password: "abcd1234")
 lara = User.create(email: "lara@codaisseurup.com", password: "abcde12345")
@@ -20,13 +19,19 @@ event_1 = Event.create(name: "Surprise Party", description: "Surprise for my big
 event_2 = Event.create(name: "Party", description: "An awesome party", location: "Amsterdam", includes_food: false, includes_drinks: true, price: 10.00, starts_at: 11.days.from_now, ends_at: 12.days.from_now, capacity: 50, active: true,  user: arno)
 
 
-Category.create!([
+[
   { name: "Sports" },
   { name: "Outdoors" },
   { name: "Friends" },
   { name: "Family" },
   { name: "Study" },
-])
+].each do |category|
+  Category.create!(category)
+end
 
 photo1 = Photo.create!(remote_image_url: "http://res.cloudinary.com/dvukrvufi/image/upload/v1507801278/concert_yusa2u.jpg", event: event_1)
 photo2 = Photo.create!(remote_image_url: "http://res.cloudinary.com/dvukrvufi/image/upload/v1507801278/wedding_yexkd0.jpg", event: event_2)
+
+puts "#{User.count} users created"
+puts "#{Event.count} events created"
+puts "#{Category.count} categories created"

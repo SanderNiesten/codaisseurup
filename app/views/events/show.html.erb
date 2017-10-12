@@ -8,11 +8,6 @@
     <h4>About</h4>
     <p><%= @event.description %></p>
 
-    <% @event.photos.each do |photo| %>
-      <%= image_tag photo.image %>
-    <% end %>
-
-
     <!-- Main Info -->
     <h4>Main Info</h4>
     <p>Location: <%= @event.location %></p>
@@ -20,6 +15,15 @@
     <p>Price: <%= @event.price %></p>
     <p>Capacity: <%= @event.capacity %> <%= @event.capacity > 1 ? "guests" : "guest" %></p>
     <p>Date: <%= @event.starts_at %></p>
+
+    <!-- Photos -->
+    <% @event.photos.each do |photo| %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <%= image_tag photo.image.thumbnail %>
+      </div>
+    </div>
+    <% end %>
 
     <!-- Amenities -->
     <h4>Amenities</h4>

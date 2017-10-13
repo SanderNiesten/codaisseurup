@@ -32,6 +32,11 @@ end
 photo1 = Photo.create!(remote_image_url: "http://res.cloudinary.com/dvukrvufi/image/upload/v1507801278/concert_yusa2u.jpg", event: event_1)
 photo2 = Photo.create!(remote_image_url: "http://res.cloudinary.com/dvukrvufi/image/upload/v1507801278/wedding_yexkd0.jpg", event: event_2)
 
+Registration.create([
+  { event: event, user: arno, price: event.price, total: event.total,  guests_count: 1 },
+  { event: event, user: lara, price: event.price, total: event.total, guests_count: 3 },
+])
+
 puts "#{User.count} users created"
 puts "#{Event.count} events created"
 puts "#{Category.count} categories created"

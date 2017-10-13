@@ -18,6 +18,8 @@ event_1 = Event.create(name: "Surprise Party", description: "Surprise for my big
 
 event_2 = Event.create(name: "Party", description: "An awesome party", location: "Amsterdam", includes_food: false, includes_drinks: true, price: 10.00, starts_at: 11.days.from_now, ends_at: 12.days.from_now, capacity: 50, active: true,  user: arno)
 
+event_3 = Event.create(name: "Birthday", description: "Party Hardy", location: "Amsterdam", includes_food: false, includes_drinks: true, price: 15.00, starts_at: 11.days.from_now, ends_at: 12.days.from_now, capacity: 50, active: true,  user: lara)
+
 
 [
   { name: "Sports" },
@@ -33,8 +35,8 @@ photo1 = Photo.create!(remote_image_url: "http://res.cloudinary.com/dvukrvufi/im
 photo2 = Photo.create!(remote_image_url: "http://res.cloudinary.com/dvukrvufi/image/upload/v1507801278/wedding_yexkd0.jpg", event: event_2)
 
 Registration.create([
-  { event: event, user: arno, price: event.price, total: event.total,  guests_count: 1 },
-  { event: event, user: lara, price: event.price, total: event.total, guests_count: 3 },
+  { event: event_1, user: arno, price: 15.00, total: 15.00,  guests_count: 1 },
+  { event: event_3, user: lara, price: 15.00, total: 45.00, guests_count: 3 },
 ])
 
 puts "#{User.count} users created"

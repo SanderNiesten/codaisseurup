@@ -1,7 +1,7 @@
 class Event < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   has_and_belongs_to_many :categories
-  has_many :photos
+  has_many :photos, dependent: :destroy
   has_many :registrations, dependent: :destroy
   has_many :guests, through: :registrations, source: :user
 
@@ -21,6 +21,8 @@ class Event < ApplicationRecord
   end
 
   scope :active, -> { where(active: true) }
+
+  
 
 # onderstaand van een opdracht op maandag 16 oktober
 #  scope :starts_before_ends_after, ->(starts_at, ends_at) {

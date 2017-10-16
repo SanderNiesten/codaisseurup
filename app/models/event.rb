@@ -15,4 +15,15 @@ class Event < ApplicationRecord
   def self.order_by_price
     order(:price)
   end
+
+  def self.alphabetical
+    order(name: :asc)
+  end
+
+  scope :active, -> { where(active: true) }
+
+# onderstaand van een opdracht op maandag 16 oktober
+#  scope :starts_before_ends_after, ->(starts_at, ends_at) {
+#  where('starts_at < ? AND ends_at > ?', starts_at, ends_at)
+#}
 end

@@ -79,4 +79,24 @@ RSpec.describe Event, type: :model do
     end
   end
 
+  describe ".alphabetical" do
+    let!(:event1) { create :event, name: "Birthday bash" }
+    let!(:event2) { create :event, name: "Cookies for everyone" }
+    let!(:event3) { create :event, name: "A walk in the park" }
+
+    it "returns a sorted array of events by names" do
+      expect(Event.alphabetical).to eq([event3, event1, event2])
+    end
+  end
+
+  describe do
+    let!(:event1) { create :event, active: false }
+    let!(:event2) { create :event, active: true }
+    let!(:event3) { create :event, active: false }
+
+    it "excludes events that are not active" do
+      expect(Event.active).to include(event2)
+    end
+  end
+
 end

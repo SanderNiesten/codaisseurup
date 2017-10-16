@@ -16,5 +16,10 @@ Rails.application.routes.draw do
   get "about" => "pages#about"
 
   resources :photos
+
+  namespace :api do
+    resources :events
+  end
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
